@@ -1,23 +1,24 @@
-import { Component } from "react";
+import { Component, useState, useEffect } from "react";
 import { Button, Form } from "react-bootstrap";
 
-class AddComment extends Component {
-  state = {
-    comment: {
-      comment: "",
-      rate: 1,
-      elementId: this.props.asin,
-    },
-  };
+const AddComment =({asin}) => {
+  // state = {
+  //   comment: {
+      // comment: "",
+      // rate: 1,
+      // elementId: this.props.asin,
+  //   },
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.asin !== this.props.asin) {
-      this.setState({
-        comment: {
-          ...this.state.comment,
-          elementId: this.props.asin,
-        },
-      });
+  const  [comment, setComment]= useState({ 
+   comment: "",
+  rate: 1,
+  elementId: asin,})
+
+  };
+// Qui sei arrivata /// CONTINUARE DA QUI
+  useEffect(()=>{setComment(...comment,)}) {
+    
+     {
     }
   }
 
@@ -26,7 +27,7 @@ class AddComment extends Component {
     try {
       let response = await fetch("https://striveschool-api.herokuapp.com/api/comments", {
         method: "POST",
-        body: JSON.stringify(this.state.comment),
+        body: JSON.stringify(state.comment),
         headers: {
           "Content-type": "application/json",
           Authorization:
@@ -35,11 +36,11 @@ class AddComment extends Component {
       });
       if (response.ok) {
         alert("Recensione inviata!");
-        this.setState({
+        setState({
           comment: {
             comment: "",
             rate: 1,
-            elementId: this.props.asin,
+            elementId: props.asin,
           },
         });
       } else {
@@ -53,7 +54,7 @@ class AddComment extends Component {
   render() {
     return (
       <div className="my-3">
-        <Form onSubmit={this.sendComment}>
+        <Form onSubmit={sendComment}>
           <Form.Group className="mb-2">
             <Form.Label>Recensione</Form.Label>
             <Form.Control
@@ -61,9 +62,9 @@ class AddComment extends Component {
               placeholder="Inserisci qui il testo"
               value={this.state.comment.comment}
               onChange={(e) =>
-                this.setState({
+                setState({
                   comment: {
-                    ...this.state.comment,
+                    ...state.comment,
                     comment: e.target.value,
                   },
                 })
@@ -76,9 +77,9 @@ class AddComment extends Component {
               as="select"
               value={this.state.comment.rate}
               onChange={(e) =>
-                this.setState({
+               setState({
                   comment: {
-                    ...this.state.comment,
+                    ...state.comment,
                     rate: e.target.value,
                   },
                 })
@@ -98,6 +99,6 @@ class AddComment extends Component {
       </div>
     );
   }
-}
+
 
 export default AddComment;
